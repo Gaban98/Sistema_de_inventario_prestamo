@@ -6,13 +6,13 @@ from .models import Elemento, Sede
 # Vista para listar los elementos
 class ElementoListView(ListView):
     model = Elemento
-    template_name = 'inventario/elemento_list.html'
+    template_name = 'inventario/listar_elementos.html'
     context_object_name = 'elementos'
 
 # Vista para crear un nuevo elemento
 class ElementoCreateView(SuccessMessageMixin, CreateView):
     model = Elemento
-    template_name = 'inventario/elemento_form.html'
+    template_name = 'inventario/añadir_elementos.html'
     fields = ['nombre', 'categoria', 'descripcion', 'estado', 'disponible']
     success_url = reverse_lazy('elemento-list')
     success_message = 'Elemento creado exitosamente.'
@@ -20,7 +20,7 @@ class ElementoCreateView(SuccessMessageMixin, CreateView):
 # Vista para editar un elemento existente
 class ElementoUpdateView(SuccessMessageMixin, UpdateView):
     model = Elemento
-    template_name = 'inventario/elemento_form.html'
+    template_name = 'inventario/editar_elementos.html'
     fields = ['nombre', 'categoria', 'descripcion', 'estado', 'disponible']
     success_url = reverse_lazy('elemento-list')
     success_message = 'Elemento actualizado exitosamente.'

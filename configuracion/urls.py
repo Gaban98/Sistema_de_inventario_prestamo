@@ -16,8 +16,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include  # Importa "include" para incluir las URLs de otras aplicaciones
-
+from usuarios.views import index_view  # Importa la vista principal
 urlpatterns = [
+    path('', index_view ,name='index'),  # URL para la vista principal
     path('admin/', admin.site.urls),
     path('usuarios/', include('usuarios.urls')),  # Incluye las URLs de la aplicación "usuarios"
     path('inventario/', include('inventario.urls')),  # Incluye las URLs de la aplicación "inventario"

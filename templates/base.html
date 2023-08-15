@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Aplicación</title>
+    <!-- Agregar tus scripts JS aquí -->
+    <script src="{% static 'js/logica.js' %}" defer ></script>
+</head>
+<body>
+    <header>
+        <div class="weather">
+            <p>Fecha: {{ current_date|date:"d/m/Y" }}</p>
+            <p id="current-time" >Hora:</p>
+            <p>Temperatura en Ibagué: {{ current_temperature }}°C</p>
+        </div>
+    </header>
+
+    <nav>
+        <ul class="nav-links">
+            <li><a href="{% url 'index' %}">Inicio</a></li>
+            <li><a href="{% url 'usuarios:usuario-list' %}">Usuarios</a></li>
+            <li><a href="{% url 'inventario:elemento-list' %}">Inventario</a></li>
+            <li><a href="">Prestamos</a></li>
+        </ul>
+    </nav>
+    
+    
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+    
+    <footer>
+        <div class="company-info">
+            <p>Información de la empresa:</p>
+            <p>Dirección: Av. Ejemplo #123</p>
+            <p>Teléfono: (123) 456-7890</p>
+            <p>Ciudad: Ibagué</p>
+            <p>Correo: info@empresa.com</p>
+        </div>
+    </footer>
+</body>
+</html>

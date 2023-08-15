@@ -1,6 +1,8 @@
 from django.urls import path
 from .views import *
 
+app_name = 'inventario'
+
 urlpatterns = [
     # URLs para Elemento
     path('elementos/', ElementoListView.as_view(), name='elemento-list'),
