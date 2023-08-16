@@ -20,13 +20,27 @@ class Sede(models.Model):
     def __str__(self):
         return self.nombre
 
+class Disponibilidad(models.Model):
+    OPCIONES_DISPONIBILIDAD = (
+        ('disponible', 'Disponible'),
+        ('prestado', 'Prestado'),
+        ('danado', 'Dañado'),
+        ('reparación', 'Reparación'),
+    )
+
+    disponible = models.CharField(max_length=20, choices=OPCIONES_DISPONIBILIDAD)
+
+    def __str__(self):
+        return self.estado
+
+
 class Elemento(models.Model):
     nombre = models.CharField(max_length=100)
-    categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
     descripcion = models.TextField()
-    sede = models.ForeignKey(Sede, on_delete=models.CASCADE)
     estado = models.CharField(max_length=15, choices=OPCIONES_ESTADO, default='Buen estado')
-    disponible = models.BooleanField(default=True)  # Indica si está disponible
+    disponibilidad = models.ForeignKey(Disponibilidad, on_delete=models.CASCADE)
+    sede = models.ForeignKey(Sede, on_delete=models.CASCADE)
+    categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.nombre
