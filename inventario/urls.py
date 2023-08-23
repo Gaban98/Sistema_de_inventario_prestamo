@@ -4,15 +4,19 @@ from .views import *
 app_name = 'inventario'
 
 urlpatterns = [
-    # URLs para Elemento
-    path('elementos/', ElementoListView.as_view(), name='elemento-list'),
-    path('elementos/create/', ElementoCreateView.as_view(), name='elemento-create'),
-    path('elementos/update/<int:pk>/', ElementoUpdateView.as_view(), name='elemento-update'),
-    path('elementos/delete/<int:pk>/', ElementoDeleteView.as_view(), name='elemento-delete'),
+    path('crear_sede/', CrearSede.as_view(), name='crear_sede'),
+    path('crear_categoria/', CrearCategoria.as_view(), name='crear_categoria'),
+    path('crear_elemento/', CrearElemento.as_view(), name='crear_elemento'),
 
-    # URLs para Sede
-    path('sedes/', SedeListView.as_view(), name='sede-list'),
-    path('sedes/create/', SedeCreateView.as_view(), name='sede-create'),
-    path('sedes/update/<int:pk>/', SedeUpdateView.as_view(), name='sede-update'),
-    path('sedes/delete/<int:pk>/', SedeDeleteView.as_view(), name='sede-delete'),
+    path('actualizar_sede/<int:pk>/', ActualizarSede.as_view(), name='actualizar_sede'),
+    path('actualizar_categoria/<int:pk>/', ActualizarCategoria.as_view(), name='actualizar_categoria'),
+    path('actualizar_elemento/<int:pk>/', ActualizarElemento.as_view(), name='actualizar_elemento'),
+
+    path('eliminar_sede/<int:pk>/', EliminarSede.as_view(), name='eliminar_sede'),
+    path('eliminar_categoria/<int:pk>/', EliminarCategoria.as_view(), name='eliminar_categoria'),
+    path('eliminar_elemento/<int:pk>/', EliminarElemento.as_view(), name='eliminar_elemento'),
+
+    path('sedes/', ListadoSede.as_view(), name='listado_sedes'),
+    path('categorias/', ListadoCategoria.as_view(), name='listado_categorias'),
+    path('elementos/', ListadoElemento.as_view(), name='listado_elementos'),
 ]

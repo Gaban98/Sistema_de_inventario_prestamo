@@ -1,5 +1,6 @@
 from django.db import models
 
+
 OPCIONES_ESTADO = [
     ('buen_estado', 'Buen estado'),
     ('mal_estado', 'Mal estado'),
@@ -31,7 +32,7 @@ class Disponibilidad(models.Model):
     disponible = models.CharField(max_length=20, choices=OPCIONES_DISPONIBILIDAD)
 
     def __str__(self):
-        return self.estado
+        return self.disponible
 
 
 class Elemento(models.Model):

@@ -1,67 +1,78 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Aplicación</title>
-    <!-- Agregar tus estilos CSS aquí -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <script src="{% static 'js/logica.js' %}" defer ></script>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <script src="js/logica.js"></script>
 </head>
 <body>
-    <header class="bg-primary text-white p-3">
-        <div class="container">
-            <div class="d-flex justify-content-between align-items-center">
-                <div class="weather">
-                    <p>Fecha: {{ current_date|date:"d/m/Y" }}</p>
-                    <p id="current-time" >Hora:</p>
-                    <p>Temperatura en Ibagué: {{ current_temperature }}°C</p>
-                </div>
-                <h1 class="mb-0">Mi Aplicación</h1>
-            </div>
-        </div>
-    </header>
-
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container">
-            <a class="navbar-brand" href="{% url 'index' %}">Inicio</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'usuarios:usuario-list' %}">Usuarios</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'inventario:elemento-list' %}">Inventario</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Prestamos</a>
-                    </li>
-                </ul>
-            </div>
+        <div id="current-time" class="ml-auto mr-2"></div>
+        <a class="navbar-brand" href="#">Mi Sitio</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'index' %}">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Préstamos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'inventario:elemento-list' %}">Inventario</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Profesores</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Otros
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{% url 'inventario:sede-categoria' %}">Sedes y categorias</a>
+                    </div>
+                </li>
+            </ul>
         </div>
     </nav>
-    
+
+        
     <main class="container mt-4">
         {% block content %}
+
         {% endblock %}
     </main>
-    
+
     <footer class="bg-light p-4">
         <div class="container">
-            <div class="company-info">
-                <p>Información de la empresa:</p>
-                <p>Dirección: Av. Ejemplo #123</p>
-                <p>Teléfono: (123) 456-7890</p>
-                <p>Ciudad: Ibagué</p>
-                <p>Correo: info@empresa.com</p>
+            <div class="row">
+                <div class="col-sm">
+                    <p class="font-weight-bold">Información de la empresa:</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm">
+                    <p>Dirección:</p>
+                    <p>Teléfono:</p>
+                    <p>Ciudad:</p>
+                    <p>Correo:</p>
+                </div>
+                <div class="col-sm">
+                    <p>Av. Ejemplo #123</p>
+                    <p>(123) 456-7890</p>
+                    <p>Ibagué</p>
+                    <p>info@empresa.com</p>
+                </div>
             </div>
         </div>
     </footer>
+    
 
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 </body>
 </html>
