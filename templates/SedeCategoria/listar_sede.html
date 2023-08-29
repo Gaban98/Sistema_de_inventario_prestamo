@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Listado de Sedes</h1>
+<ul>
+    {% for sede in sedes %}
+    <li>{{ sede.nombre }}</li>
+    {% endfor %}
+</ul>
+<a href="{% url 'inventario:listado_categorias' %}" class="btn btn-secondary">Ver Categorías</a>
+<!-- Otros botones o enlaces que desees agregar -->
+{% endblock %}
