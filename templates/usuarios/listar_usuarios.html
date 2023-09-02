@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Botón para abrir el modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalCrearUsuario">Crear Usuario</button>
+
+<!-- Lista de Usuarios -->
+<table class="table">
+    <thead>
+        <tr>
+            <th>Cédula</th>
+            <th>Nombres</th>
+            <th>Apellidos</th>
+            <th>Correo</th>
+            <th>Celular</th>
+            <th>Sede</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for usuario in usuarios %}
+        <tr>
+            <td>{{ usuario.cedula }}</td>
+            <td>{{ usuario.nombres }}</td>
+            <td>{{ usuario.apellidos }}</td>
+            <td>{{ usuario.correo }}</td>
+            <td>{{ usuario.celular }}</td>
+            <td>{{ usuario.sede }}</td>
+            <td>
+                <a href="{% url 'editar_usuario' usuario.id %}" class="btn btn-primary">Editar</a>
+                <a href="{% url 'eliminar_usuario' usuario.id %}" class="btn btn-danger">Eliminar</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<!-- Modal de Crear Usuario -->
+<div class="modal fade" id="modalCrearUsuario" tabindex="-1" role="dialog" aria-labelledby="modalCrearUsuarioLabel" aria-hidden="true">
+    <!-- ... Contenido del modal de creación de usuario ... -->
+</div>
+{% endblock %}

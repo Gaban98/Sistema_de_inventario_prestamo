@@ -59,23 +59,6 @@ class SedeForm(forms.ModelForm):
             ),
         }
 
-class DisponibilidadForm(forms.ModelForm):
-    class Meta:
-        model = Disponibilidad
-        fields = ['disponible']
-        labels = {
-            'disponible': 'Disponibilidad del elemento',
-        }
-        widgets = {
-            'disponible': forms.Select(
-                attrs={
-                    'class': 'form-control',
-                    'placeholder': 'Ingrese la disponibilidad del elemento',
-                    'id': 'disponible'
-                }
-            )
-        }
-
 class ElementoForm(forms.ModelForm):
     class Meta:
         model = Elemento
@@ -106,28 +89,24 @@ class ElementoForm(forms.ModelForm):
             'estado': forms.Select(
                 attrs={
                     'class': 'form-control',
-                    'placeholder': 'Ingrese el estado del elemento',
                     'id': 'estado'
                 }
             ),
             'disponibilidad': forms.Select(
                 attrs={
                     'class': 'form-control',
-                    'placeholder': 'Ingrese la disponibilidad del elemento',
                     'id': 'disponibilidad'
                 }
             ),
             'sede': forms.Select(
                 attrs={
                     'class': 'form-control',
-                    'placeholder': 'Ingrese la sede del elemento',
                     'id': 'sede'
                 }
             ),
             'categoria': forms.Select(
                 attrs={
                     'class': 'form-control',
-                    'placeholder': 'Ingrese la categoría del elemento',
                     'id': 'categoria'
                 }
             ),

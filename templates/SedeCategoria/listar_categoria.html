@@ -24,9 +24,10 @@
     Agregar Categoria
 </button>
 <a href="{% url 'index' %}" class="btn btn-secondary">Volver al Inicio</a>
+<a href="{% url 'inventario:listado_sedes' %}" class="btn btn-secondary">Sedes</a>
 
 
-<!-- Modal para agregar/editar categoría -->
+<!-- Modal para agregar -->
 <div class="modal fade" id="agregarCategoriaModal" tabindex="-1" role="dialog" aria-labelledby="agregarCategoriaModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">

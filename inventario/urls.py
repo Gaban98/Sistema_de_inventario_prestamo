@@ -6,9 +6,9 @@ app_name = 'inventario'
 urlpatterns = [
 
     ########## CREADORES #################
-    path('crear_sede/', CrearSede.as_view(), name='crear_sede'),
-    path('crear_categoria/', CrearCategoria.as_view(), name='crear_categoria'),
-    path('crear_elemento/', CrearElemento.as_view(), name='crear_elemento'),
+    # path('crear_sede/', CrearSede.as_view(), name='crear_sede'),
+    # path('crear_categoria/', CrearCategoria.as_view(), name='crear_categoria'),
+    # path('crear_elemento/', CrearElemento.as_view(), name='crear_elemento'),
 
 ############# EDITORES #################
     path('actualizar_sede/<int:pk>/', ActualizarSede.as_view(), name='actualizar_sede'),

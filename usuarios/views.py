@@ -39,7 +39,7 @@ def index_view(request):
 # Vista para listar los usuarios
 class UsuarioListView(ListView):
     model = Usuario
-    template_name = 'usuarios/usuario_list.html'
+    template_name = 'usuarios/listar_usuarios.html'
     context_object_name = 'usuarios'
 
 # Vista para crear un nuevo usuario
