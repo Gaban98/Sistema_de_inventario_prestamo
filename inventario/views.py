@@ -5,25 +5,6 @@ from .models import *
 from .form import *
 from django.shortcuts import render, redirect
 
-###################     Para AGREGAR    ######################
-
-# class CrearSede(CreateView):
-#     model = Sede
-#     fields = ['nombre', 'direccion', 'telefono', 'jefe_directo']
-#     template_name = 'SedeCategoria/crear_sede.html'
-#     success_url = reverse_lazy('inventario:listado_sedes')
-
-# class CrearCategoria(CreateView):
-#     model = Categoria
-#     fields = ['nombre']
-#     template_name = 'SedeCategoria/listar_categoria.html'
-#     success_url = reverse_lazy('inventario:listado_categorias')
-
-# class CrearElemento(CreateView):
-#     model = Elemento
-#     fields = ['nombre', 'descripcion', 'estado', 'disponibilidad', 'sede', 'categoria']
-#     template_name = 'crear_elemento.html'
-#     success_url = 'inventario/listar_elemento'
 
 ###################     Para EDITAR     ######################
 
@@ -70,7 +51,7 @@ class EliminarElemento(DeleteView):
         self.object.delete()
         return redirect('inventario:listado_elementos')
 
-###################     Para LISTAR     ######################
+###################     Para LISTAR   y AÑADIR   ######################
 class ListadoSede(ListView):
     model = Sede
     template_name = 'SedeCategoria/listar_sede.html'
