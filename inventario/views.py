@@ -24,8 +24,9 @@ class ActualizarCategoria(UpdateView):
 class ActualizarElemento(UpdateView):
     model = Elemento
     fields = ['nombre', 'descripcion', 'estado', 'disponibilidad', 'sede', 'categoria']
-    template_name = 'nombre_del_template.html'
-    success_url = 'inventario/listar_elemento'
+    template_name = 'inventario/editar_elemento.html'
+    success_url = reverse_lazy('inventario:listado_elementos')
+
 
 ###################     Para ELIMINAR   ######################
 

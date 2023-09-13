@@ -77,5 +77,19 @@ class UsuarioDeleteView(DeleteView):
         self.object = self.get_object()
         self.object.delete()
         return redirect('usuarios:usuario-list')
+    
+###############################3 LOGICA DEL PRESTAMO ##########################################
 
+def listarcrear_prestamo(request):
+    if request.method == 'POST':
+        form = PrestamoForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('usuarios:prestamo')  # Redirige a la misma vista para mostrar la lista actualizada
+    else:
+        form = PrestamoForm()
+    
+    prestamos = Prestamo.objects.all()  # Obtén todos los préstamos existentes
+    
+    return render(request, 'usuarios/prestamo.html', {'form': form, 'prestamos': prestamos})
 

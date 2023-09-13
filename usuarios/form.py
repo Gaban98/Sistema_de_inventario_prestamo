@@ -1,6 +1,8 @@
 from django import forms
 from .models import *
 
+
+
 class UsuarioForm(forms.ModelForm):
     class Meta:
         model = Usuario
@@ -55,4 +57,13 @@ class UsuarioForm(forms.ModelForm):
                     'id': 'sede'
                 }
             ),
+        }
+
+class PrestamoForm(forms.ModelForm):
+    class Meta:
+        model = Prestamo
+        fields = ['usuario', 'elemento', 'fecha_prestamo', 'fecha_devolucion']
+        widgets = {
+            'fecha_prestamo': forms.DateInput(attrs={'type': 'date'}),
+            'fecha_devolucion': forms.DateInput(attrs={'type': 'date'}),
         }

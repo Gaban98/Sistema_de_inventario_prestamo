@@ -62,52 +62,18 @@ class SedeForm(forms.ModelForm):
 class ElementoForm(forms.ModelForm):
     class Meta:
         model = Elemento
-        fields = ['nombre', 'descripcion', 'estado', 'disponibilidad', 'sede', 'categoria']
+        fields = ['nombre', 'descripcion', 'sede', 'categoria']
         labels = {
             'nombre': 'Nombre del elemento',
             'descripcion': 'Descripción del elemento',
-            'estado': 'Estado del elemento',
-            'disponibilidad': 'Disponibilidad del elemento',
             'sede': 'Sede del elemento',
             'categoria': 'Categoría del elemento',
         }
         widgets = {
-            'nombre': forms.TextInput(
-                attrs={
-                    'class': 'form-control',
-                    'placeholder': 'Ingrese el nombre del elemento',
-                    'id': 'nombre'
-                }
-            ),
-            'descripcion': forms.Textarea(
-                attrs={
-                    'class': 'form-control',
-                    'placeholder': 'Ingrese la descripción del elemento',
-                    'id': 'descripcion'
-                }
-            ),
-            'estado': forms.Select(
-                attrs={
-                    'class': 'form-control',
-                    'id': 'estado'
-                }
-            ),
-            'disponibilidad': forms.Select(
-                attrs={
-                    'class': 'form-control',
-                    'id': 'disponibilidad'
-                }
-            ),
-            'sede': forms.Select(
-                attrs={
-                    'class': 'form-control',
-                    'id': 'sede'
-                }
-            ),
-            'categoria': forms.Select(
-                attrs={
-                    'class': 'form-control',
-                    'id': 'categoria'
-                }
-            ),
+            'nombre': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese el nombre del elemento', 'id': 'nombre'}),
+            'descripcion': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Ingrese la descripción del elemento', 'id': 'descripcion'}),
+            'sede': forms.Select(attrs={'class': 'form-control', 'id': 'sede'}),
+            'categoria': forms.Select(attrs={'class': 'form-control', 'id': 'categoria'}),
+            'estado': forms.HiddenInput(),  # Oculta el campo estado
+            'disponibilidad': forms.HiddenInput(),  # Oculta el campo disponibilidad
         }

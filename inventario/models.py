@@ -9,9 +9,11 @@ OPCIONES_ESTADO = [
 OPCIONES_DISPONIBILIDAD = [
     ('disponible', 'Disponible'),
     ('prestado', 'Prestado'),
-    ('danado', 'Dañado'),
+    ('dañado', 'Dañado'),
     ('reparacion', 'Reparación'),  # Cambiado a 'reparacion' para coincidir con las opciones del modelo.
 ]
+
+# vamos a trabajar los estados del elemento desde la table prestamos
 
 class Categoria(models.Model):
     nombre = models.CharField(max_length=100)
@@ -39,3 +41,5 @@ class Elemento(models.Model):
     def __str__(self):
         return self.nombre
 
+
+# aca unicamente debe crear disponible y en buen estado por defecto para que despues el pueda editarlo desde lo perosonal y asi
