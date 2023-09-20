@@ -1,5 +1,6 @@
 from django.urls import path
 from .views import *
+from . import views
 
 app_name = 'inventario'
 
@@ -26,4 +27,9 @@ urlpatterns = [
     path('sedes/', ListadoSede.as_view(), name='listado_sedes'),
     path('categorias/', ListadoCategoria.as_view(), name='listado_categorias'),
     path('elementos/', ListadoElemento.as_view(), name='listado_elementos'),
+
+############# AÑADIDORES #################
+    
+    path('inventory/', views.inventory_view, name='view'),
+
 ]

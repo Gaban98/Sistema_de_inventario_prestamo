@@ -1,10 +1,12 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import *
+from django.http import JsonResponse
 from .models import *
 from .form import *
-import requests
-import datetime
+from inventario.views import *
+from django.utils import timezone
+
 
 
 # Vista princpal
@@ -84,7 +86,17 @@ def listarcrear_prestamo(request):
     if request.method == 'POST':
         form = PrestamoForm(request.POST)
         if form.is_valid():
-            form.save()
+            prestamo = form.save()
+
+            # Obtenemos el elemento asociado al préstamo
+            elemento = Elemento.objects.get(id=prestamo.elemento.id)
+
+            # Cambiamos el estado del elemento a 'prestado'
+            elemento.disponibilidad = 'prestado'
+
+            # Guardamos el elemento con su nuevo estado
+            elemento.save()
+
             return redirect('usuarios:prestamo')  # Redirige a la misma vista para mostrar la lista actualizada
     else:
         form = PrestamoForm()
@@ -93,3 +105,17 @@ def listarcrear_prestamo(request):
     
     return render(request, 'usuarios/prestamo.html', {'form': form, 'prestamos': prestamos})
 
+
+def devolver_prestamo(request, prestamo_id):
+    prestamo = get_object_or_404(Prestamo, id=prestamo_id)
+
+    # Aquí actualizamos el estado del elemento a 'disponible'
+    elemento = Elemento.objects.get(id=prestamo.elemento.id)
+    elemento.disponibilidad = 'Disponible'
+    elemento.save()
+
+    # Aquí marcamos el préstamo como devuelto
+    prestamo.fecha_devolucion = timezone.now()
+    prestamo.save()
+
+    return redirect('usuarios:prestamo')

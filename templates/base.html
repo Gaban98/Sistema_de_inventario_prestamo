@@ -4,7 +4,6 @@
 <head>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-    <script src="js/logica.js"></script>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -22,10 +21,10 @@
                     <a class="nav-link" href="{% url 'usuarios:prestamo' %}">Préstamos</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'inventario:listado_elementos' %}">Inventario</a>
+                    <a class="nav-link" href="{% url 'usuarios:usuario-list' %}">Profesores</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'usuarios:usuario-list' %}">Profesores</a>
+                    <a class="nav-link" href="{% url 'inventario:listado_elementos' %}">Inventario</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -72,6 +71,7 @@
     </footer>
     
 
+    <script src="{% static 'js/logica.js' %}"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>

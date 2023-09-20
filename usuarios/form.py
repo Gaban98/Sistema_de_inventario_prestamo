@@ -67,3 +67,7 @@ class PrestamoForm(forms.ModelForm):
             'fecha_prestamo': forms.DateInput(attrs={'type': 'date'}),
             'fecha_devolucion': forms.DateInput(attrs={'type': 'date'}),
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['elemento'].queryset = Elemento.objects.filter(disponibilidad='Disponible')

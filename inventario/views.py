@@ -1,9 +1,11 @@
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
+from django.http import JsonResponse
 from django.views.generic import *
 from .models import *
 from .form import *
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
+
 
 
 ###################     Para EDITAR     ######################
@@ -114,3 +116,32 @@ class ListadoElemento(ListView):
             context['form_elemento'] = form
             return self.render_to_response(context)
         
+
+####################### alterar estado y disponibilidad de elementos #########################
+
+
+
+
+#################### filtro ##########################3
+def inventory_view(request):
+    # Obtener el filtro seleccionado del parámetro de la URL o del formulario
+    filtro = request.GET.get('filtro')
+
+    # Obtener todos los elementos o aplicar el filtro seleccionado
+    if filtro == 'todos':
+        elementos = Elemento.objects.all()
+    elif filtro == 'disponibles':
+        elementos = Elemento.objects.filter(disponibilidad='disponible')
+    elif filtro == 'prestados':
+        elementos = Elemento.objects.filter(disponibilidad='prestado')
+    elif filtro == 'danados':
+        elementos = Elemento.objects.filter(estado='danado')
+    elif filtro == 'reparacion':
+        elementos = Elemento.objects.filter(estado='reparacion')
+    else:
+        elementos = Elemento.objects.none()  # No se seleccionó un filtro válido, mostrar lista vacía
+
+    return render(request, 'inventory.html', {'elementos': elementos})
+
+
+#Crear cuadrito para mostrar las caracteristicas mediante un modal, las caracteristicas o la descripciópn#

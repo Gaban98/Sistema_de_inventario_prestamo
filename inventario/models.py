@@ -1,9 +1,9 @@
 from django.db import models
 
 OPCIONES_ESTADO = [
-    ('buen_estado', 'Buen estado'),
-    ('mal_estado', 'Mal estado'),
-    ('en_reparacion', 'En reparación'),
+    ('buen estado', 'Buen estado'),
+    ('mal estado', 'Mal estado'),
+    ('en reparacion', 'En reparación'),
 ]
 
 OPCIONES_DISPONIBILIDAD = [

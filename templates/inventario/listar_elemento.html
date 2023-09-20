@@ -4,10 +4,12 @@
 {% block content %}
 <div class="btn-group mb-3">
     <button type="button" class="btn btn-primary" onclick="filterElements('todos')">Todos</button>
-    <button type="button" class="btn btn-primary" onclick="filterElements('estado')">Por Estado</button>
-    <button type="button" class="btn btn-primary" onclick="filterElements('disponibilidad')">Por Disponibilidad</button>
-    <button type="button" class="btn btn-primary" onclick="filterElements('sede')">Por Sede</button>
+    <button type="button" class="btn btn-primary" onclick="filterElements('disponible')">Disponibles</button>
+    <button type="button" class="btn btn-primary" onclick="filterElements('prestado')">Prestados</button>
+    <button type="button" class="btn btn-primary" onclick="filterElements('dañado')">Dañados</button>
+    <button type="button" class="btn btn-primary" onclick="filterElements('reparacion')">Reparación</button>
 </div>
+
 
 <table class="table">
     <thead>
@@ -64,5 +66,9 @@
     </div>
 </div>
 
+<script>
+    // Pasar la URL necesaria al archivo JavaScript como una variable global
+    var inventoryURL = "{% url 'inventario:view' %}";
+</script>
 
 {% endblock %}

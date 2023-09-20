@@ -12,7 +12,6 @@
                 <th>Elemento</th>
                 <th>Fecha Inicio</th>
                 <th>Fecha Fin</th>
-                <th>Estado</th>
             </tr>
         </thead>
         <tbody>
@@ -22,20 +21,22 @@
                 <td>{{ prestamo.elemento }}</td>
                 <td>{{ prestamo.fecha_prestamo }}</td>
                 <td>{{ prestamo.fecha_devolucion }}</td>
-                <td>{{ prestamo.estado }}</td>
-                {% if prestamo.estado == 'Prestado' %}
-                <td><a href="{% url 'devolver' prestamo.id %}">Devolver</a></td>
-                {% endif %}
-
+                <!-- Botón de devolución -->
+                <td>
+                    <a href="{% url 'usuarios:devolver_prestamo' prestamo.id %}" class="btn btn-primary">
+                        Devolver
+                    </a>
+                </td>
             </tr>
-            {% endfor %}
+{% endfor %}
         </tbody>
     </table>
+</div>
 
-    <!-- Botón para mostrar el modal de creación -->
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#crearPrestamoModal">
-        Crear Préstamo
-    </button>
+<!-- Botón para mostrar el modal de creación -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#crearPrestamoModal">
+    Crear Préstamo
+</button>
 
 <!-- Modal de creación de préstamo -->
 <div class="modal fade" id="crearPrestamoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -48,8 +49,9 @@
                 </button>
             </div>
             <div class="modal-body">
+
                 <!-- Formulario de creación -->
-                <form method="post" class="form">
+                <form method="post" class="form" >
                     {% csrf_token %}
                     <div class="form-group">
                         {{ form.usuario.label_tag }}
