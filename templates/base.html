@@ -1,0 +1,79 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div id="current-time" class="ml-auto mr-2"></div>
+        <a class="navbar-brand" href="{% url 'index' %}">Mi Sitio</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'index' %}">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'usuarios:prestamo' %}">Préstamos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'usuarios:usuario-list' %}">Profesores</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'inventario:listado_elementos' %}">Inventario</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Otros
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{% url 'inventario:listado_categorias' %}">Categorias</a>
+                        <a class="dropdown-item" href="{% url 'inventario:listado_sedes' %}">Sedes</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+        
+    <main class="container mt-4">
+        {% block content %}
+
+        {% endblock %}
+    </main>
+
+    <footer class="bg-light p-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm">
+                    <p class="font-weight-bold">Información de la empresa:</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm">
+                    <p>Dirección:</p>
+                    <p>Teléfono:</p>
+                    <p>Ciudad:</p>
+                    <p>Correo:</p>
+                </div>
+                <div class="col-sm">
+                    <p>Av. Ejemplo #123</p>
+                    <p>(123) 456-7890</p>
+                    <p>Ibagué</p>
+                    <p>info@empresa.com</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+
+    <script src="{% static 'js/logica.js' %}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</body>
+</html>

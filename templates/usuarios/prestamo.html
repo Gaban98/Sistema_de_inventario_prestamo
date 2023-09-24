@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <!-- Lista de préstamos -->
+    <h1>Lista de Préstamos</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Elemento</th>
+                <th>Fecha Inicio</th>
+                <th>Fecha Fin</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for prestamo in prestamos %}
+            <tr>
+                <td>{{ prestamo.usuario }}</td>
+                <td>{{ prestamo.elemento }}</td>
+                <td>{{ prestamo.fecha_prestamo }}</td>
+                <td>{{ prestamo.fecha_devolucion }}</td>
+                <!-- Botón de devolución -->
+                <td>
+                    <a href="{% url 'usuarios:devolver_prestamo' prestamo.id %}" class="btn btn-primary">
+                        Devolver
+                    </a>
+                </td>
+            </tr>
+{% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<!-- Botón para mostrar el modal de creación -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#crearPrestamoModal">
+    Crear Préstamo
+</button>
+
+<!-- Modal de creación de préstamo -->
+<div class="modal fade" id="crearPrestamoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Crear Préstamo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <!-- Formulario de creación -->
+                <form method="post" class="form" >
+                    {% csrf_token %}
+                    <div class="form-group">
+                        {{ form.usuario.label_tag }}
+                        {{ form.usuario }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.elemento.label_tag }}
+                        {{ form.elemento }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.fecha_prestamo.label_tag }}
+                        {{ form.fecha_prestamo }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.fecha_devolucion.label_tag }}
+                        {{ form.fecha_devolucion }}
+                    </div>
+                    <button type="submit" class="btn btn-primary">Guardar Préstamo</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

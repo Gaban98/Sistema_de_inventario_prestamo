@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="btn-group mb-3">
+    <button type="button" class="btn btn-primary" onclick="filterElements('todos')">Todos</button>
+    <button type="button" class="btn btn-primary" onclick="filterElements('disponible')">Disponibles</button>
+    <button type="button" class="btn btn-primary" onclick="filterElements('prestado')">Prestados</button>
+    <button type="button" class="btn btn-primary" onclick="filterElements('dañado')">Dañados</button>
+    <button type="button" class="btn btn-primary" onclick="filterElements('reparacion')">Reparación</button>
+</div>
+
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Nombre</th>
+        <th>Estado</th>
+        <th>Disponibilidad</th>
+        <th>Sede</th>
+        <th>Acciones</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for elemento in elementos %}
+    <tr>
+        <td>{{ elemento.nombre }}</td>
+        <td>{{ elemento.estado }}</td>
+        <td>{{ elemento.disponibilidad }}</td>
+        <td>{{ elemento.sede }}</td>
+        <td>
+        <!-- Agrega aquí los enlaces para editar y eliminar -->
+        <a href="{% url 'inventario:actualizar_elemento' elemento.id %}" class="btn btn-primary">Editar</a>
+        <a href="{% url 'inventario:eliminar_elemento' elemento.id %}" class="btn btn-danger">Eliminar</a>
+        </td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="5">No hay elementos disponibles.</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#modalCrearElemento">Agregar Elemento</a>
+
+<!-- Modal de Crear Elemento -->
+<div class="modal fade" id="modalCrearElemento" tabindex="-1" role="dialog" aria-labelledby="modalCrearElementoLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title" id="modalCrearElementoLabel">Crear Elemento</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div class="modal-body">
+            <form method="post">
+                {% csrf_token %}
+                {{ form_elemento.as_div }}
+                <button type="submit" class="btn btn-primary">Guardar</button>
+            </form>              
+        </div>
+        <div class="modal-footer">
+        </div>
+    </div>
+    </div>
+</div>
+
+<script>
+    // Pasar la URL necesaria al archivo JavaScript como una variable global
+    var inventoryURL = "{% url 'inventario:view' %}";
+</script>
+
+{% endblock %}
