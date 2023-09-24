@@ -143,9 +143,3 @@ def inventory_view(request):
 
     return render(request, 'inventory.html', {'elementos': elementos})
 
-
-<<<<<<< HEAD
-#Crear cuadrito para mostrar las caracteristicas mediante un modal, las caracteristicas o la descripciópn#
-=======
-#Crear cuadrito para mostrar las caracteristicas mediante un modal, las caracteristicas o la descripciópn#
->>>>>>> bd28843649810534ce603eef2b829627d5e00dfb
