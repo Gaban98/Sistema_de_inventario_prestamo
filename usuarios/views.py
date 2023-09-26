@@ -86,13 +86,30 @@ def listarcrear_prestamo(request):
     if request.method == 'POST':
         form = PrestamoForm(request.POST)
         if form.is_valid():
-            prestamo = form.save()
+            prestamo = form.save(commit=False)  # No guardamos el préstamo todavía
+            
+            # Validación adicional de fecha
+            if prestamo.fecha_prestamo < timezone.now().date():
+                return render(request, 'usuarios/prestamo.html', {
+                    'form': form,
+                    'prestamos': Prestamo.objects.all(),
+                    'error_message': "La fecha de préstamo no puede ser en el pasado."
+                })
+            
+            if (prestamo.fecha_prestamo - timezone.now().date()).days > 380:
+                return render(request, 'usuarios/prestamo.html', {
+                    'form': form,
+                    'prestamos': Prestamo.objects.all(),
+                    'error_message': "La duración máxima del préstamo es de 380 días."
+                })
+
+            prestamo.save()
 
             # Obtenemos el elemento asociado al préstamo
             elemento = Elemento.objects.get(id=prestamo.elemento.id)
 
             # Cambiamos el estado del elemento a 'prestado'
-            elemento.disponibilidad = 'prestado'
+            elemento.disponibilidad = 'Prestado'
 
             # Guardamos el elemento con su nuevo estado
             elemento.save()
@@ -104,7 +121,6 @@ def listarcrear_prestamo(request):
     prestamos = Prestamo.objects.all()  # Obtén todos los préstamos existentes
     
     return render(request, 'usuarios/prestamo.html', {'form': form, 'prestamos': prestamos})
-
 
 def devolver_prestamo(request, prestamo_id):
     prestamo = get_object_or_404(Prestamo, id=prestamo_id)

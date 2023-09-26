@@ -1,5 +1,6 @@
 from django.db import models
 from inventario.models import Sede, Elemento
+from django.utils import timezone
 
 class Usuario(models.Model):
     cedula = models.CharField(max_length=10, unique=True)
@@ -18,9 +19,12 @@ class Prestamo(models.Model):
     fecha_prestamo = models.DateField()
     fecha_devolucion = models.DateField(null=True, blank=True)
 
-# cuando yo vaya a prestar un elemento, debo cambiar el estado del elemento a prestado
-# no puedo prestar nada dañado, nada en mal estado, debe estar disponible y en buen estado# ademas se deben 
-# mofidicadiones en el modelo de prestamo, para que cuando se devuelva el elemento, se cambie el estado del elemento
-
-
-#aca debo hacer la table de opciones de disponbilidad y estado, para que cuando se preste un elemento, se cambie el estado del elemento
+    def save(self, *args, **kwargs):
+        # Agregamos validación de fecha al guardar el préstamo
+        if self.fecha_prestamo < timezone.now().date():
+            raise ValueError("La fecha de préstamo no puede ser en el pasado.")
+        
+        if (self.fecha_prestamo - timezone.now().date()).days > 380:
+            raise ValueError("La duración máxima del préstamo es de 380 días.")
+        
+        super(Prestamo, self).save(*args, **kwargs)

@@ -101,10 +101,6 @@ class ListadoElemento(ListView):
     model = Elemento
     template_name = 'inventario/listar_elemento.html'
     context_object_name = 'elementos'
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['form_elemento'] = ElementoForm()
-        return context
 
     def post(self, request, *args, **kwargs):
         form = ElementoForm(request.POST)
@@ -115,31 +111,28 @@ class ListadoElemento(ListView):
             context = self.get_context_data()
             context['form_elemento'] = form
             return self.render_to_response(context)
-        
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form_elemento'] = ElementoForm()
+        context['form_filtro'] = FiltroElementosForm(self.request.GET)
+        return context
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        disponibilidad_filtrada = self.request.GET.get('disponibilidad')
+        if disponibilidad_filtrada:
+            queryset = queryset.filter(disponibilidad=disponibilidad_filtrada)
+        return queryset
 
 ####################### alterar estado y disponibilidad de elementos #########################
 
+def filtrar_elementos_por_disponibilidad(request, disponibilidad):
+    elementos_filtrados = Elemento.objects.filter(disponibilidad=disponibilidad)
+    context = {
+        'elementos': elementos_filtrados,
+    }
+    return render(request, 'inventario/listar_elemento.html', context)
 
 
-
-#################### filtro ##########################3
-def inventory_view(request):
-    # Obtener el filtro seleccionado del parámetro de la URL o del formulario
-    filtro = request.GET.get('filtro')
-
-    # Obtener todos los elementos o aplicar el filtro seleccionado
-    if filtro == 'todos':
-        elementos = Elemento.objects.all()
-    elif filtro == 'disponibles':
-        elementos = Elemento.objects.filter(disponibilidad='disponible')
-    elif filtro == 'prestados':
-        elementos = Elemento.objects.filter(disponibilidad='prestado')
-    elif filtro == 'danados':
-        elementos = Elemento.objects.filter(estado='danado')
-    elif filtro == 'reparacion':
-        elementos = Elemento.objects.filter(estado='reparacion')
-    else:
-        elementos = Elemento.objects.none()  # No se seleccionó un filtro válido, mostrar lista vacía
-
-    return render(request, 'inventory.html', {'elementos': elementos})
 

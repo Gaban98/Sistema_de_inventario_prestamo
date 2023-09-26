@@ -29,7 +29,5 @@ urlpatterns = [
     path('elementos/', ListadoElemento.as_view(), name='listado_elementos'),
 
 ############# AÑADIDORES #################
-    
-    path('inventory/', views.inventory_view, name='view'),
-
+    path('inventario/elementos/filtrar/<str:disponibilidad>/', views.filtrar_elementos_por_disponibilidad, name='filtrar_elementos_por_disponibilidad'),
 ]

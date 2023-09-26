@@ -7,10 +7,10 @@ OPCIONES_ESTADO = [
 ]
 
 OPCIONES_DISPONIBILIDAD = [
-    ('disponible', 'Disponible'),
-    ('prestado', 'Prestado'),
-    ('dañado', 'Dañado'),
-    ('reparacion', 'Reparación'),  # Cambiado a 'reparacion' para coincidir con las opciones del modelo.
+    ('Disponible', 'Disponible'),
+    ('Prestado', 'Prestado'),
+    ('Dañado', 'Dañado'),
+    ('Reparacion', 'Reparación'),  # Cambiado a 'reparacion' para coincidir con las opciones del modelo.
 ]
 
 # vamos a trabajar los estados del elemento desde la table prestamos
@@ -42,4 +42,3 @@ class Elemento(models.Model):
         return self.nombre
 
 
-# aca unicamente debe crear disponible y en buen estado por defecto para que despues el pueda editarlo desde lo perosonal y asi

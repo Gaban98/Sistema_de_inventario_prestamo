@@ -77,3 +77,7 @@ class ElementoForm(forms.ModelForm):
             'estado': forms.HiddenInput(),  # Oculta el campo estado
             'disponibilidad': forms.HiddenInput(),  # Oculta el campo disponibilidad
         }
+
+
+class FiltroElementosForm(forms.Form):
+    disponibilidad = forms.ChoiceField(choices=OPCIONES_DISPONIBILIDAD, required=False, label="Filtrar por Disponibilidad")
