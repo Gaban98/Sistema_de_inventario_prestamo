@@ -18,13 +18,16 @@ class Prestamo(models.Model):
     elemento = models.ForeignKey(Elemento, on_delete=models.CASCADE)
     fecha_prestamo = models.DateField()
     fecha_devolucion = models.DateField(null=True, blank=True)
+    devuelto = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
         # Agregamos validación de fecha al guardar el préstamo
-        if self.fecha_prestamo < timezone.now().date():
+        if self.fecha_prestamo < timezone.localtime().date():
             raise ValueError("La fecha de préstamo no puede ser en el pasado.")
         
-        if (self.fecha_prestamo - timezone.now().date()).days > 380:
+        if (self.fecha_prestamo - timezone.localtime().date()).days > 380:
             raise ValueError("La duración máxima del préstamo es de 380 días.")
         
-        super(Prestamo, self).save(*args, **kwargs)
+        super().save(*args, **kwargs)
+
+

@@ -1,6 +1,5 @@
 from django.contrib.messages.views import SuccessMessageMixin
-from django.urls import reverse_lazy
-from django.http import JsonResponse
+from django.urls import reverse_lazy, reverse
 from django.views.generic import *
 from .models import *
 from .form import *
@@ -101,7 +100,7 @@ class ListadoElemento(ListView):
     model = Elemento
     template_name = 'inventario/listar_elemento.html'
     context_object_name = 'elementos'
-
+    
     def post(self, request, *args, **kwargs):
         form = ElementoForm(request.POST)
         if form.is_valid():
@@ -116,23 +115,12 @@ class ListadoElemento(ListView):
         context = super().get_context_data(**kwargs)
         context['form_elemento'] = ElementoForm()
         context['form_filtro'] = FiltroElementosForm(self.request.GET)
+        context['modal_url'] = reverse('inventario:listado_elementos')  # URL para el modal de creación
         return context
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        disponibilidad_filtrada = self.request.GET.get('disponibilidad')
-        if disponibilidad_filtrada:
-            queryset = queryset.filter(disponibilidad=disponibilidad_filtrada)
+        disponibilidad = self.kwargs.get('disponibilidad', None)
+        if disponibilidad:
+            queryset = queryset.filter(disponibilidad=disponibilidad)
         return queryset
-
-####################### alterar estado y disponibilidad de elementos #########################
-
-def filtrar_elementos_por_disponibilidad(request, disponibilidad):
-    elementos_filtrados = Elemento.objects.filter(disponibilidad=disponibilidad)
-    context = {
-        'elementos': elementos_filtrados,
-    }
-    return render(request, 'inventario/listar_elemento.html', context)
-
-
-

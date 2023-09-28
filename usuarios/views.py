@@ -82,6 +82,8 @@ class UsuarioDeleteView(DeleteView):
     
 ###############################3 LOGICA DEL PRESTAMO ##########################################
 
+from django.utils import timezone
+
 def listarcrear_prestamo(request):
     if request.method == 'POST':
         form = PrestamoForm(request.POST)
@@ -89,14 +91,14 @@ def listarcrear_prestamo(request):
             prestamo = form.save(commit=False)  # No guardamos el préstamo todavía
             
             # Validación adicional de fecha
-            if prestamo.fecha_prestamo < timezone.now().date():
+            if prestamo.fecha_prestamo < timezone.localtime().date():
                 return render(request, 'usuarios/prestamo.html', {
                     'form': form,
                     'prestamos': Prestamo.objects.all(),
                     'error_message': "La fecha de préstamo no puede ser en el pasado."
                 })
             
-            if (prestamo.fecha_prestamo - timezone.now().date()).days > 380:
+            if (prestamo.fecha_prestamo - timezone.localtime().date()).days > 380:
                 return render(request, 'usuarios/prestamo.html', {
                     'form': form,
                     'prestamos': Prestamo.objects.all(),
@@ -118,9 +120,14 @@ def listarcrear_prestamo(request):
     else:
         form = PrestamoForm()
     
-    prestamos = Prestamo.objects.all()  # Obtén todos los préstamos existentes
+    prestamos = Prestamo.objects.filter(devuelto=False)  # Obtén todos los préstamos existentes
     
     return render(request, 'usuarios/prestamo.html', {'form': form, 'prestamos': prestamos})
+
+def historial_prestamos(request):
+    prestamos = Prestamo.objects.exclude(fecha_devolucion=None)
+    return render(request, 'usuarios/historial_prestamo.html', {'prestamos': prestamos})
+
 
 def devolver_prestamo(request, prestamo_id):
     prestamo = get_object_or_404(Prestamo, id=prestamo_id)
@@ -132,6 +139,8 @@ def devolver_prestamo(request, prestamo_id):
 
     # Aquí marcamos el préstamo como devuelto
     prestamo.fecha_devolucion = timezone.now()
+    prestamo.devuelto = True
     prestamo.save()
 
     return redirect('usuarios:prestamo')
+    

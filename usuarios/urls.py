@@ -15,7 +15,7 @@ urlpatterns = [
     path('prestamos/', views.listarcrear_prestamo, name='prestamo'),
 
     ##################################### alterar inventario ########################################
-path('devolver_prestamo/<int:prestamo_id>/', views.devolver_prestamo, name='devolver_prestamo'),
+    path('devolver_prestamo/<int:prestamo_id>/', views.devolver_prestamo, name='devolver_prestamo'),
+    path('historial_prestamos/', views.historial_prestamos, name='historial_prestamos'),
 
-    
 ]

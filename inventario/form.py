@@ -77,6 +77,7 @@ class ElementoForm(forms.ModelForm):
             'estado': forms.HiddenInput(),  # Oculta el campo estado
             'disponibilidad': forms.HiddenInput(),  # Oculta el campo disponibilidad
         }
+        
 
 
 class FiltroElementosForm(forms.Form):

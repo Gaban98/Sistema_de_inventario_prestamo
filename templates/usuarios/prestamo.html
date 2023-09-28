@@ -1,11 +1,12 @@
 {% extends "base.html" %}
 {% load static %}
 
-
 {% block content %}
 <div class="container">
     <!-- Lista de préstamos -->
     <h1>Lista de Préstamos</h1>
+    <a href="{% url 'usuarios:historial_prestamos' %}" class="btn btn-primary">Historial</a>
+    
     <table class="table">
         <thead>
             <tr>
@@ -17,7 +18,7 @@
         </thead>
         <tbody>
             {% for prestamo in prestamos %}
-            <tr>
+            <tr class="{% if prestamo.devuelto %}devuelto{% else %}activo{% endif %}">
                 <td>{{ prestamo.usuario }}</td>
                 <td>{{ prestamo.elemento }}</td>
                 <td>{{ prestamo.fecha_prestamo }}</td>
@@ -29,7 +30,7 @@
                     </a>
                 </td>
             </tr>
-{% endfor %}
+            {% endfor %}
         </tbody>
     </table>
 </div>
