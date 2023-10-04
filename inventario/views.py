@@ -3,6 +3,8 @@ from django.urls import reverse_lazy, reverse
 from django.views.generic import *
 from .models import *
 from .form import *
+from django.http import JsonResponse
+from django.core import serializers
 from django.shortcuts import render, redirect, get_object_or_404
 
 
@@ -124,3 +126,9 @@ class ListadoElemento(ListView):
         if disponibilidad:
             queryset = queryset.filter(disponibilidad=disponibilidad)
         return queryset
+    
+def filtrar_elementos(request):
+    elemento = request.GET.get('elemento', None)
+    elementos = Elemento.objects.filter(nombre__icontains=elemento, disponibilidad='Disponible')
+    data = serializers.serialize('json', elementos)
+    return JsonResponse(data, safe=False)

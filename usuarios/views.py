@@ -6,6 +6,8 @@ from .models import *
 from .form import *
 from inventario.views import *
 from django.utils import timezone
+from django.utils import timezone
+from django.core import serializers
 
 
 
@@ -82,8 +84,6 @@ class UsuarioDeleteView(DeleteView):
     
 ###############################3 LOGICA DEL PRESTAMO ##########################################
 
-from django.utils import timezone
-
 def listarcrear_prestamo(request):
     if request.method == 'POST':
         form = PrestamoForm(request.POST)
@@ -125,8 +125,9 @@ def listarcrear_prestamo(request):
     return render(request, 'usuarios/prestamo.html', {'form': form, 'prestamos': prestamos})
 
 def historial_prestamos(request):
-    prestamos = Prestamo.objects.exclude(fecha_devolucion=None)
+    prestamos = Prestamo.objects.filter(devuelto=True)
     return render(request, 'usuarios/historial_prestamo.html', {'prestamos': prestamos})
+
 
 
 def devolver_prestamo(request, prestamo_id):

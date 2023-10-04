@@ -17,5 +17,4 @@ urlpatterns = [
     ##################################### alterar inventario ########################################
     path('devolver_prestamo/<int:prestamo_id>/', views.devolver_prestamo, name='devolver_prestamo'),
     path('historial_prestamos/', views.historial_prestamos, name='historial_prestamos'),
-
 ]
