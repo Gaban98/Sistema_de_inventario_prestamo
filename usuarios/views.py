@@ -11,40 +11,7 @@ from django.utils import timezone
 import datetime
 import pytz
 def index_view(request):
-    # Configura la zona horaria de Colombia
-    colombia_timezone = pytz.timezone('America/Bogota')
-
-    # Obtiene la hora actual en la zona horaria de Colombia
-    current_time_colombia = datetime.datetime.now(colombia_timezone)
-
-    # Adelanta la hora 12 horas
-    current_time_colombia += datetime.timedelta(hours=12)
-
-    # Formatea la hora para mostrarla como una cadena
-    current_time_colombia_str = current_time_colombia.strftime("%H:%M:%S")
-
-    # Simula el paso de una hora
-    one_hour_later_colombia = (current_time_colombia + datetime.timedelta(hours=72)).strftime("%H:%M:%S")
-
-    # Obtiene la fecha actual y simulada
-    current_date = current_time_colombia.strftime("%Y-%m-%d")
-    simulated_date = (current_time_colombia + datetime.timedelta(hours=72)).strftime("%Y-%m-%d")
-
-    # Resto de tu código...
-
-    # Pasar las variables al contexto
-    context = {
-        'current_date': current_date,
-        'current_time_colombia': current_time_colombia_str,
-        'one_hour_later_colombia': one_hour_later_colombia,
-        'real_time': current_time_colombia_str,
-        'simulated_time': one_hour_later_colombia,
-        'real_date': current_date,
-        'simulated_date': simulated_date,  # Agrega "fecha simulada" al contexto
-    }
-
-    return render(request, 'index.html', context)
-
+    return render(request, 'index.html')
 
 # Vista para listar los usuarios
 class UsuarioListView(ListView):
