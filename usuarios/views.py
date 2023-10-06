@@ -1,20 +1,14 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import *
-from django.http import JsonResponse
 from .models import *
 from .form import *
 from inventario.views import *
 from django.utils import timezone
-from django.utils import timezone
-from django.core import serializers
-
-
 
 # Vista princpal
 import datetime
 import requests
-from django.shortcuts import render
 
 def index_view(request):
     # Obtener la hora actual
@@ -84,50 +78,32 @@ class UsuarioDeleteView(DeleteView):
     
 ###############################3 LOGICA DEL PRESTAMO ##########################################
 
+from django.shortcuts import render, redirect
+
 def listarcrear_prestamo(request):
     if request.method == 'POST':
         form = PrestamoForm(request.POST)
         if form.is_valid():
-            prestamo = form.save(commit=False)  # No guardamos el préstamo todavía
-            
-            # Validación adicional de fecha
-            if prestamo.fecha_prestamo < timezone.localtime().date():
-                return render(request, 'usuarios/prestamo.html', {
-                    'form': form,
-                    'prestamos': Prestamo.objects.all(),
-                    'error_message': "La fecha de préstamo no puede ser en el pasado."
-                })
-            
-            if (prestamo.fecha_prestamo - timezone.localtime().date()).days > 380:
-                return render(request, 'usuarios/prestamo.html', {
-                    'form': form,
-                    'prestamos': Prestamo.objects.all(),
-                    'error_message': "La duración máxima del préstamo es de 380 días."
-                })
+            prestamo = form.save(commit=False)
+
+            # Cambiamos el estado del elemento a 'prestado' y guardamos el elemento
+            prestamo.elemento.disponibilidad = 'Prestado'
+            prestamo.elemento.save()
 
             prestamo.save()
-
-            # Obtenemos el elemento asociado al préstamo
-            elemento = Elemento.objects.get(id=prestamo.elemento.id)
-
-            # Cambiamos el estado del elemento a 'prestado'
-            elemento.disponibilidad = 'Prestado'
-
-            # Guardamos el elemento con su nuevo estado
-            elemento.save()
 
             return redirect('usuarios:prestamo')  # Redirige a la misma vista para mostrar la lista actualizada
     else:
         form = PrestamoForm()
     
-    prestamos = Prestamo.objects.filter(devuelto=False)  # Obtén todos los préstamos existentes
+    prestamos = Prestamo.objects.filter(devuelto=False)
     
     return render(request, 'usuarios/prestamo.html', {'form': form, 'prestamos': prestamos})
 
-def historial_prestamos(request):
-    prestamos = Prestamo.objects.filter(devuelto=True)
-    return render(request, 'usuarios/historial_prestamo.html', {'prestamos': prestamos})
 
+def historial_prestamos(request):
+    prestamos = Prestamo.objects.filter(devuelto=1)
+    return render(request, 'usuarios/historial_prestamo.html', {'prestamos': prestamos})
 
 
 def devolver_prestamo(request, prestamo_id):
@@ -145,3 +121,7 @@ def devolver_prestamo(request, prestamo_id):
 
     return redirect('usuarios:prestamo')
     
+def elementos_por_categoria(request, categoria_id):
+    elementos = Elemento.objects.filter(categoria_id=categoria_id)
+    elementos_json = [{'id': elemento.id, 'nombre': elemento.nombre} for elemento in elementos]
+    return JsonResponse(elementos_json, safe=False)

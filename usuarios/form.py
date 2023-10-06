@@ -1,4 +1,6 @@
+from django.utils import timezone
 from django import forms
+from inventario.models import *
 from .models import *
 
 
@@ -60,14 +62,16 @@ class UsuarioForm(forms.ModelForm):
         }
 
 class PrestamoForm(forms.ModelForm):
+    categoria = forms.ModelChoiceField(queryset=Categoria.objects.all())
+
     class Meta:
         model = Prestamo
         fields = ['usuario', 'elemento', 'fecha_prestamo', 'fecha_devolucion']
         widgets = {
-            'fecha_prestamo': forms.DateInput(attrs={'type': 'date'}),
-            'fecha_devolucion': forms.DateInput(attrs={'type': 'date'}),
+            'fecha_prestamo': forms.DateInput(attrs={'type': 'date', 'min': timezone.now().date()}),
+            'fecha_devolucion': forms.DateInput(attrs={'type': 'date', 'min': timezone.now().date()}),
         }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['elemento'].queryset = Elemento.objects.filter(disponibilidad='Disponible')
+        self.fields['elemento'].queryset = Elemento.objects.none()

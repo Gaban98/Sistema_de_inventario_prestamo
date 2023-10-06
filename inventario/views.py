@@ -1,6 +1,7 @@
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy, reverse
 from django.views.generic import *
+import json
 from .models import *
 from .form import *
 from django.http import JsonResponse
@@ -128,7 +129,11 @@ class ListadoElemento(ListView):
         return queryset
     
 def filtrar_elementos(request):
-    elemento = request.GET.get('elemento', None)
-    elementos = Elemento.objects.filter(nombre__icontains=elemento, disponibilidad='Disponible')
-    data = serializers.serialize('json', elementos)
-    return JsonResponse(data, safe=False)
+    nombre_elemento = request.GET.get('elemento')
+    elementos = Elemento.objects.filter(nombre__icontains=nombre_elemento)
+    
+    # Serializar los elementos a JSON
+    elementos_serializados = [{'nombre': elemento.nombre, 'descripcion': elemento.descripcion} for elemento in elementos]
+    
+    # Devolver la respuesta en formato JSON
+    return JsonResponse(elementos_serializados, safe=False)

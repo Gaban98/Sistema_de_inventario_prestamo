@@ -82,3 +82,5 @@ class ElementoForm(forms.ModelForm):
 
 class FiltroElementosForm(forms.Form):
     disponibilidad = forms.ChoiceField(choices=OPCIONES_DISPONIBILIDAD, required=False, label="Filtrar por Disponibilidad")
+
+
