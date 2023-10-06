@@ -74,4 +74,4 @@ class PrestamoForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['elemento'].queryset = Elemento.objects.none()
+        self.fields['elemento'].queryset = Elemento.objects.filter(disponibilidad='Disponible')

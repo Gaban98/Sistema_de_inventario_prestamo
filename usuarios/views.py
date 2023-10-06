@@ -1,39 +1,50 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
+from django.http import JsonResponse
 from django.views.generic import *
 from .models import *
 from .form import *
 from inventario.views import *
 from django.utils import timezone
 
-# Vista princpal
+
 import datetime
-import requests
-
+import pytz
 def index_view(request):
-    # Obtener la hora actual
-    current_date = datetime.date.today()
-    current_time = datetime.datetime.now().strftime("%H:%M:%S")
+    # Configura la zona horaria de Colombia
+    colombia_timezone = pytz.timezone('America/Bogota')
 
-    # Obtener la temperatura y descripción del clima en Ibagué
-    api_key = "bc2638f8e4a4db5a407207c4a9beaef7"
-    url = f"http://api.openweathermap.org/data/2.5/weather?q=Ibague,CO&units=metric&appid={api_key}"
-    
-    response = requests.get(url)
-    data = response.json()
-    
-    current_temperature = data['main']['temp']
-    description = data['weather'][0]['description']
+    # Obtiene la hora actual en la zona horaria de Colombia
+    current_time_colombia = datetime.datetime.now(colombia_timezone)
+
+    # Adelanta la hora 12 horas
+    current_time_colombia += datetime.timedelta(hours=12)
+
+    # Formatea la hora para mostrarla como una cadena
+    current_time_colombia_str = current_time_colombia.strftime("%H:%M:%S")
+
+    # Simula el paso de una hora
+    one_hour_later_colombia = (current_time_colombia + datetime.timedelta(hours=72)).strftime("%H:%M:%S")
+
+    # Obtiene la fecha actual y simulada
+    current_date = current_time_colombia.strftime("%Y-%m-%d")
+    simulated_date = (current_time_colombia + datetime.timedelta(hours=72)).strftime("%Y-%m-%d")
+
+    # Resto de tu código...
 
     # Pasar las variables al contexto
     context = {
-        'current_date': current_date, # 'current_date' es el nombre de la variable que se usará en el template 'index.html
-        'current_time': current_time,
-        'current_temperature': current_temperature,
-        'description': description,
+        'current_date': current_date,
+        'current_time_colombia': current_time_colombia_str,
+        'one_hour_later_colombia': one_hour_later_colombia,
+        'real_time': current_time_colombia_str,
+        'simulated_time': one_hour_later_colombia,
+        'real_date': current_date,
+        'simulated_date': simulated_date,  # Agrega "fecha simulada" al contexto
     }
-    
+
     return render(request, 'index.html', context)
+
 
 # Vista para listar los usuarios
 class UsuarioListView(ListView):
@@ -78,8 +89,6 @@ class UsuarioDeleteView(DeleteView):
     
 ###############################3 LOGICA DEL PRESTAMO ##########################################
 
-from django.shortcuts import render, redirect
-
 def listarcrear_prestamo(request):
     if request.method == 'POST':
         form = PrestamoForm(request.POST)
@@ -91,6 +100,9 @@ def listarcrear_prestamo(request):
             prestamo.elemento.save()
 
             prestamo.save()
+
+            # Actualizamos la lista de elementos disponibles en el formulario
+            form.fields['elemento'].queryset = Elemento.objects.filter(disponibilidad='Disponible')
 
             return redirect('usuarios:prestamo')  # Redirige a la misma vista para mostrar la lista actualizada
     else:
@@ -120,8 +132,23 @@ def devolver_prestamo(request, prestamo_id):
     prestamo.save()
 
     return redirect('usuarios:prestamo')
-    
+
 def elementos_por_categoria(request, categoria_id):
-    elementos = Elemento.objects.filter(categoria_id=categoria_id)
+    elementos = Elemento.objects.filter(categoria_id=categoria_id, disponibilidad='Disponible')
     elementos_json = [{'id': elemento.id, 'nombre': elemento.nombre} for elemento in elementos]
     return JsonResponse(elementos_json, safe=False)
+
+current_time = timezone.now()
+one_hour_later = current_time + timezone.timedelta(hours=1)
+from django.utils import timezone
+
+# Obtén la hora actual
+current_time = timezone.now()
+
+# Simula el paso de una hora
+one_hour_later = current_time + timezone.timedelta(hours=1)
+
+# Imprime las marcas de tiempo
+print('Hora actual:', current_time)
+print('Una hora después:', one_hour_later)
+

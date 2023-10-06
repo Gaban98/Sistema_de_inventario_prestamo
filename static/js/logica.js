@@ -1,8 +1,9 @@
 $(document).ready(function() {
     $('#id_categoria').change(function() {
         var categoriaId = $(this).val();
+        var url = '/usuarios/api/elementos_por_categoria/' + categoriaId; // URL fija
         $.ajax({
-            url: '/api/elementos_por_categoria/' + categoriaId,
+            url: url,
             method: 'GET',
             success: function(data) {
                 var elementoSelect = $('#id_elemento');
