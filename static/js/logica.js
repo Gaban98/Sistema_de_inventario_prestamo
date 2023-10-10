@@ -16,3 +16,12 @@ $(document).ready(function() {
         });
     });
 });
+
+$(document).ready(function(){
+    $('.delete-btn').on('click', function(e){
+        var objectType = $(this).data('object-type');
+        if(!confirm('¿Estás seguro de que quieres eliminar este ' + objectType + '?')){
+            e.preventDefault();
+        }
+    });
+});

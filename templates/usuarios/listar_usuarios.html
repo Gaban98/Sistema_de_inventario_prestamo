@@ -3,6 +3,9 @@
 
 {% block content %}
 <!-- Lista de Usuarios -->
+{% for sede in sedes %}
+    <a href="{% url 'usuarios:usuario-list-sede' sede.id %}" class="btn btn-primary">{{ sede.nombre }}</a>
+{% endfor %}
 <table class="table">
     <thead>
         <tr>
@@ -26,7 +29,7 @@
             <td>{{ usuario.sede }}</td>
             <td>
                 <a href="{% url 'usuarios:usuario-update' usuario.id %}" class="btn btn-primary">Editar</a>
-                <a href="{% url 'usuarios:usuario-delete' usuario.id %}" class="btn btn-danger">Eliminar</a>
+                <a href="{% url 'usuarios:usuario-delete' usuario.id %}" class="btn btn-danger delete-btn" data-object-type="Usuario">Eliminar</a>
             </td>
         </tr>
         {% endfor %}

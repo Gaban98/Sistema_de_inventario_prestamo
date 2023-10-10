@@ -1,9 +1,75 @@
+/* ------- Codigo de Footer --------- */
+
 body {
     display: flex;
     flex-direction: column;
-    min-height: 100vh; /* Al menos el alto de la ventana visible */
+    min-height: 100vh;
+    font-family: sans-serif;
 }
 
-.container {
-    flex-grow: 1; /* Hace crecer el contenido principal para ocupar el espacio restante */
+/* Estilos CSS para el footer */
+.footer-custom {
+    background-color: #01225E !important;
+    color: white;
+    font-family: sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    margin-top: auto;
+    padding: 20px;
 }
+
+.footer-custom p {
+    margin: 0; /* Elimina el espacio entre párrafos */
+    font-size: 14px; /* Ajusta el tamaño de fuente */
+}
+
+.footer-custom .font-weight-bold {
+    font-size: 16px; /* Ajusta el tamaño de fuente para el texto en negrita */
+}
+
+.footer-custom .font-italic {
+    font-size: 16px; /* Ajusta el tamaño de fuente para el texto en cursiva */
+    font-style: italic;
+}
+
+/* Estilos CSS para las líneas */
+.my-2 {
+    border-top: 1px solid white; /* Línea horizontal */
+    width: 60%; /* Ajusta el ancho de la línea */
+}
+
+.col-sm:first-child img {
+    float: left; /* Imagen a la izquierda */
+    margin-right: 10px; /* Espacio entre la imagen y el texto */
+}
+
+.col-sm:last-child img {
+    float: right; /* Imagen a la derecha */
+    margin-left: 10px; /* Espacio entre la imagen y el texto */
+}
+
+/* Aca es para el NAV */
+.navbar-nav .nav-link:hover {
+    background-color: #b3d1ff;
+    border-radius: 10px;
+}
+/* Eliminar los bordes redondeados del botón "Otros" */
+.navbar-nav .nav-item.dropdown.show .dropdown-menu {
+    border: none; /* Elimina el borde */
+    border-radius: 0; /* Elimina los bordes redondeados */
+    display: none; /* Oculta el menú desplegable por defecto */
+}
+
+/* Mostrar el menú desplegable solo en hover */
+.navbar-nav .nav-item.dropdown:hover .dropdown-menu {
+    display: block; /* Muestra el menú desplegable en hover */
+    border: none; /* Elimina el borde */
+}
+
+/* Cambiar el color de fondo en hover para los elementos del menú desplegable "Otros" */
+.dropdown-menu a.dropdown-item:hover {
+    background-color: #b3d1ff; /* Cambia el color de fondo en hover según tus preferencias */
+    border-radius: 10px; /* Ajusta el valor de border-radius según el grado de redondez que desees */
+}
+
+

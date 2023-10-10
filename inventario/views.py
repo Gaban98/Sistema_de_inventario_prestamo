@@ -1,12 +1,10 @@
-from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib import messages
 from django.urls import reverse_lazy, reverse
 from django.views.generic import *
-import json
 from .models import *
 from .form import *
 from django.http import JsonResponse
-from django.core import serializers
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import redirect
 
 
 
@@ -108,6 +106,7 @@ class ListadoElemento(ListView):
         form = ElementoForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Elemento creado correctamente')
             return redirect('inventario:listado_elementos')
         else:
             context = self.get_context_data()

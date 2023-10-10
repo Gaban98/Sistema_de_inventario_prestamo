@@ -36,6 +36,19 @@ class UsuarioListView(ListView):
             context = self.get_context_data()
             context['form_usuario'] = form
             return self.render_to_response(context)
+        
+    def get_queryset(self):
+        sede_id = self.kwargs.get('sede_id')
+        if sede_id:
+            return Usuario.objects.filter(sede=sede_id)
+        else:
+            return Usuario.objects.all()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form_usuario'] = UsuarioForm()  # Agregar el formulario al contexto
+        context['sedes'] = Sede.objects.all()  # Agregar todas las sedes al contexto
+        return context
 
 
 # Vista para editar un usuario existente
@@ -105,17 +118,4 @@ def elementos_por_categoria(request, categoria_id):
     elementos_json = [{'id': elemento.id, 'nombre': elemento.nombre} for elemento in elementos]
     return JsonResponse(elementos_json, safe=False)
 
-current_time = timezone.now()
-one_hour_later = current_time + timezone.timedelta(hours=1)
-from django.utils import timezone
-
-# Obtén la hora actual
-current_time = timezone.now()
-
-# Simula el paso de una hora
-one_hour_later = current_time + timezone.timedelta(hours=1)
-
-# Imprime las marcas de tiempo
-print('Hora actual:', current_time)
-print('Una hora después:', one_hour_later)
 

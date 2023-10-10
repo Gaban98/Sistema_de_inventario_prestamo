@@ -7,6 +7,7 @@ app_name = 'usuarios'
 urlpatterns = [
     path('index/', index_view, name='index'),
     path('profesores/', UsuarioListView.as_view(), name='usuario-list'),
+    path('profesores/sede/<int:sede_id>/', UsuarioListView.as_view(), name='usuario-list-sede'),  # Nueva ruta
     path('actualizar_profesor/<int:pk>/', UsuarioUpdateView.as_view(), name='usuario-update'),
     path('eliminar_profesor/<int:pk>/', UsuarioDeleteView.as_view(), name='usuario-delete'),
 

@@ -19,7 +19,7 @@
             <td>{{ sede.jefe_directo }}</td>
             <td>{{ sede.telefono }}</td>
             <td><a href="{% url 'inventario:actualizar_sede' sede.id %}" class="btn btn-primary">Editar</a></td>
-            <td><a href="{% url 'inventario:eliminar_sede' sede.id %}" class="btn btn-danger">Eliminar</a></td>
+            <td><a href="{% url 'inventario:eliminar_sede' sede.id %}" class="btn btn-danger delete-btn" data-object-type="Sede">Eliminar</a></td>
         </tr>
         {% endfor %}
     </tbody>
