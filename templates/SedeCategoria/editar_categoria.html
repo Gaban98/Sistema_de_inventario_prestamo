@@ -1,11 +1,17 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Editar Categoría</h1>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
-</form>
-<a href="{% url 'inventario:listado_categorias' %}" class="btn btn-secondary">Cancelar</a>
+<div class="container">
+    <h1 class="my-4">Editar Categoría</h1>
+    <form method="post" class="my-4">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="{{ form.nombre.id_for_label }}" class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="{{ form.nombre.id_for_label }}" name="{{ form.nombre.html_name }}" value="{{ form.nombre.value }}">
+        </div>
+        <!-- Repite el bloque anterior para cada campo en tu formulario -->
+        <button type="submit" class="btn btn-success">Guardar Cambios</button>
+        <a href="{% url 'inventario:listado_categorias' %}" class="btn btn-danger">Cancelar</a>
+    </form>
+</div>
 {% endblock %}

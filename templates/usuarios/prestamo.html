@@ -5,8 +5,6 @@
 <div class="container">
     <!-- Lista de préstamos -->
     <h1>Lista de Préstamos</h1>
-    <a href="{% url 'usuarios:historial_prestamos' %}" class="btn btn-primary">Historial</a>
-    
     <table class="table">
         <thead>
             <tr>
@@ -36,9 +34,8 @@
 </div>
 
 <!-- Botón para mostrar el modal de creación -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#crearPrestamoModal">
-    Crear Préstamo
-</button>
+<button type="button" class="btn btn-outline-success text-dark border-1" data-toggle="modal" data-target="#crearPrestamoModal">Crear Préstamo</button>
+<a href="{% url 'usuarios:historial_prestamos' %}" class="btn btn-primary">Historial</a>
 
 <!-- Modal de creación de préstamo -->
 <div class="modal fade" id="crearPrestamoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -77,21 +74,6 @@
                     </div>
                     <button type="submit" class="btn btn-primary">Guardar Préstamo</button>
                 </form>
-                
-                <!-- Mostrar errores de validación -->
-                {% if form.errors %}
-                <div class="alert alert-danger">
-                    <ul>
-                        {% for field, error_list in form.errors.items %}
-                        {% for error in error_list %}
-                        <li>{{ field }}: {{ error }}</li>
-                        {% endfor %}
-                        {% endfor %}
-                    </ul>
-                </div>
-                {% endif %}
-                <!-- Fin de mostrar errores de validación -->
-
             </div>
         </div>
     </div>

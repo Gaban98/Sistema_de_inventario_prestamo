@@ -4,7 +4,7 @@
 {% block content %}
 <!-- Lista de Usuarios -->
 {% for sede in sedes %}
-    <a href="{% url 'usuarios:usuario-list-sede' sede.id %}" class="btn btn-primary">{{ sede.nombre }}</a>
+<a href="{% url 'usuarios:usuario-list-sede' sede.id %}" class="btn btn-outline-info border-1 text-info">{{ sede.nombre }}</a>
 {% endfor %}
 <table class="table">
     <thead>
@@ -28,15 +28,15 @@
             <td>{{ usuario.celular }}</td>
             <td>{{ usuario.sede }}</td>
             <td>
-                <a href="{% url 'usuarios:usuario-update' usuario.id %}" class="btn btn-primary">Editar</a>
-                <a href="{% url 'usuarios:usuario-delete' usuario.id %}" class="btn btn-danger delete-btn" data-object-type="Usuario">Eliminar</a>
+                <a href="{% url 'usuarios:usuario-update' usuario.id %}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a>
+                <a href="{% url 'usuarios:usuario-delete' usuario.id %}" class="btn btn-danger delete-btn" data-object-type="Usuario"><i class="fas fa-trash-alt"></i></a>
             </td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
 <!-- Botón para abrir el modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalCrearUsuario">Crear Usuario</button>
+<button type="button" class="btn btn-outline-success text-dark border-1" data-toggle="modal" data-target="#modalCrearUsuario">Crear Usuario</button>
 
 <!-- Modal de Crear Usuario -->
 <div class="modal fade" id="modalCrearUsuario" tabindex="-1" role="dialog" aria-labelledby="modalCrearUsuarioLabel" aria-hidden="true">

@@ -8,8 +8,7 @@
             <th>Nombre</th>
             <th>Coordinador(a)</th>
             <th>Telefono</th>
-            <th>Editar</th>
-            <th>Eliminar</th>
+            <th>acciones</th>
         </tr>
     </thead>
     <tbody>
@@ -18,17 +17,16 @@
             <td>{{ sede.nombre }}</td>
             <td>{{ sede.jefe_directo }}</td>
             <td>{{ sede.telefono }}</td>
-            <td><a href="{% url 'inventario:actualizar_sede' sede.id %}" class="btn btn-primary">Editar</a></td>
-            <td><a href="{% url 'inventario:eliminar_sede' sede.id %}" class="btn btn-danger delete-btn" data-object-type="Sede">Eliminar</a></td>
+            <td>
+                <a href="{% url 'inventario:actualizar_sede' sede.id %}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a>
+                <a href="{% url 'inventario:eliminar_sede' sede.id %}" class="btn btn-danger delete-btn" data-object-type="Sede"><i class="fas fa-trash-alt"></i></a>
+            </td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#agregarSedeModal">
-    Agregar Sede
-</button>
-<a href="{% url 'index' %}" class="btn btn-secondary">Volver al Inicio</a>
-<a href="{% url 'inventario:listado_categorias' %}" class="btn btn-secondary">Categorías</a>
+<button type="button" class="btn btn-outline-success text-dark border-1" data-toggle="modal" data-target="#agregarSedeModal">Agregar Sede</button>
+<a href="{% url 'inventario:listado_categorias' %}" class="btn btn-outline-success text-dark border-1">Categorías</a>
 
 <!-- Modal para agregar/editar sede -->
 <div class="modal fade" id="agregarSedeModal" tabindex="-1" role="dialog" aria-labelledby="agregarSedeModalLabel" aria-hidden="true">

@@ -1,11 +1,53 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
-<h1>Editar Elemento</h1>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
-</form>
-<a href="{% url 'inventario:listado_elementos' %}" class="btn btn-secondary">Volver al Listado de Elementos</a>
+<div class="container">
+    <h1>Editar Elemento</h1>
+    <form method="post" class="my-4">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="{{ form.nombre.id_for_label }}" class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="{{ form.nombre.id_for_label }}" name="{{ form.nombre.html_name }}" value="{{ form.nombre.value }}">
+        </div>
+        <div class="mb-3">
+            <label for="{{ form.descripcion.id_for_label }}" class="form-label">Descripción</label>
+            <textarea class="form-control" id="{{ form.descripcion.id_for_label }}" name="{{ form.descripcion.html_name }}">{{ form.descripcion.value }}</textarea>
+        </div>
+        <div class="mb-3">
+            <label for="{{ form.estado.id_for_label }}" class="form-label">Estado</label>
+            <select class="form-select select2" id="{{ form.estado.id_for_label }}" name="{{ form.estado.html_name }}">
+                {% for choice in form.estado.field.choices %}
+                <option value="{{ choice.0 }}" {% if form.estado.value == choice.0 %}selected{% endif %}>{{ choice.1 }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="{{ form.disponibilidad.id_for_label }}" class="form-label">Disponibilidad</label>
+            <select class="form-select select2" id="{{ form.disponibilidad.id_for_label }}" name="{{ form.disponibilidad.html_name }}">
+                {% for choice in form.disponibilidad.field.choices %}
+                <option value="{{ choice.0 }}" {% if form.disponibilidad.value == choice.0 %}selected{% endif %}>{{ choice.1 }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="{{ form.sede.id_for_label }}" class="form-label">Sede</label>
+            <select class="form-select select2" id="{{ form.sede.id_for_label }}" name="{{ form.sede.html_name }}">
+                {% for choice in form.sede.field.choices %}
+                <option value="{{ choice.0 }}" {% if form.sede.value == choice.0 %}selected{% endif %}>{{ choice.1 }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="{{ form.categoria.id_for_label }}" class="form-label">Categoría</label>
+            <select class="form-select select2" id="{{ form.categoria.id_for_label }}" name="{{ form.categoria.html_name }}">
+                {% for choice in form.categoria.field.choices %}
+                <option value="{{ choice.0 }}" {% if form.categoria.value == choice.0 %}selected{% endif %}>{{ choice.1 }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+    </form>
+    <a href="{% url 'inventario:listado_elementos' %}" class="btn btn-secondary">Volver al Listado de Elementos</a>
+</div>
 {% endblock %}
