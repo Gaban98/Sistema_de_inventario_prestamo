@@ -1,12 +1,16 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.shortcuts import get_object_or_404
 from django.views.generic import *
 from .models import *
 from .form import *
 from inventario.views import *
 from django.utils import timezone
+from reportlab.pdfgen import canvas
+from reportlab.lib.pagesizes import letter, landscape
+from reportlab.lib import colors
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle
 
 
 import datetime
@@ -119,4 +123,39 @@ def elementos_por_categoria(request, categoria_id):
     elementos_json = [{'id': elemento.id, 'nombre': elemento.nombre} for elemento in elementos]
     return JsonResponse(elementos_json, safe=False)
 
+################################ exportar a pdf o excel ##########################################
+def exportar_historial_prestamos_pdf(request):
+    # Crear un objeto response con el tipo de contenido PDF
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="historial_prestamos.pdf"'
 
+    # Obtén los datos de tu historial de préstamos
+    historial_prestamos = Prestamo.objects.all()  # Asegúrate de importar tu modelo Prestamo
+
+    # Crear el objeto PDF, usando landscape para orientación horizontal
+    doc = SimpleDocTemplate(response, pagesize=landscape(letter))
+
+    # Crear datos para la tabla (reemplaza esto con tus datos)
+    data = [['Usuario', 'Elemento', 'Fecha de Préstamo', 'Fecha de Devolución']]
+
+    for prestamo in historial_prestamos:
+        data.append([prestamo.usuario, prestamo.elemento, prestamo.fecha_prestamo, prestamo.fecha_devolucion])
+
+    # Crear la tabla y definir estilos
+    table = Table(data)
+    table.setStyle(TableStyle([
+        ('BACKGROUND', (0, 0), (-1, 0), colors.grey),
+        ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+        ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+        ('BACKGROUND', (0, 1), (-1, -1), colors.beige),
+        ('GRID', (0, 0), (-1, -1), 1, colors.black),
+    ]))
+
+    # Construir la tabla y agregarla al objeto PDF
+    elements = []
+    elements.append(table)
+    doc.build(elements)
+
+    return response

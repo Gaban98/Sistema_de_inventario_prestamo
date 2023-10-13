@@ -19,5 +19,7 @@ urlpatterns = [
     path('devolver_prestamo/<int:prestamo_id>/', views.devolver_prestamo, name='devolver_prestamo'),
     path('historial_prestamos/', views.historial_prestamos, name='historial_prestamos'),
     path('api/elementos_por_categoria/<int:categoria_id>', views.elementos_por_categoria, name='elementos_por_categoria'),
+    path('exportar_historial_prestamos_pdf/', views.exportar_historial_prestamos_pdf, name='exportar_historial_prestamos_pdf'),
+
 
 ]
